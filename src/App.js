@@ -34,6 +34,7 @@ function Product(props){
     height:'250px',
     width:'200px',
     float:'left',
+    // display:'left',
     margin:'5px'
 
 
