@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
 
@@ -20,6 +20,7 @@ function App() {
       <header className="App-header">
         <h1>Im a REACT Person</h1>
         <Counter></Counter>
+        <Users></Users>
         <ul>
           {
             nayoks.map(nayok => <li>{nayok}</li>)
@@ -42,7 +43,23 @@ function App() {
   );
 }
 
-
+function Users(){
+  const [users, setUsers] = useState([]);
+  useEffect(()=>{
+    // console.log('Calling Effect');
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res=>res.json())
+    .then(data => setUsers(data));
+  })
+  return (
+    <div>
+      <h3> Dynamic Users: {users.length}</h3>
+      {
+        users.map(user => <li >Name:- {user.name}</li>)
+      }
+    </div>
+  )
+}
 
 
 function Product(props){
@@ -77,10 +94,28 @@ function Product(props){
 }
 
 function Counter(){
-  const [count, setCount] = useState(10);
+  const [count, setCount] = useState(0);
+  const handleIncrease = () => {
+    const newCount = count +1;
+    setCount(newCount);
+  }
+  const handleDecrease = () => {
+    var newCount = count - 1;
+    if(newCount<0){
+      newCount = 0;
+    }
+    else{
+      setCount(newCount);
+    }
+    
+  }
+
+
   return (
     <div>
       <h1>Count: {count}</h1>
+      <button onClick={handleIncrease}>Increase</button>
+      <button onClick={handleDecrease}>Decrease</button>
     </div>
   )
 }
